@@ -1,10 +1,12 @@
 import os
 
 from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for)
+                   send_from_directory, url_for,make_response, send_file)
 
 app = Flask(__name__)
-
+#Constants for Application
+GenFile_FolderPath='.\\'
+GenFile_Name_Prefix ='generated_diagram2.drawio'
 
 @app.route('/')
 def index():
@@ -36,8 +38,8 @@ import drawpyo
 def CreateDrawIoFile():
     # Create a new draw.io file
     file = drawpyo.File()
-    file.file_path = '.\\'
-    file.file_name = 'generated_diagram2.drawio'
+    file.file_path = GenFile_FolderPath
+    file.file_name = GenFile_Name_Prefix
 
     # Add a page
     page = drawpyo.Page(file=file)
@@ -101,6 +103,22 @@ def ConvertStringsToImage():
     file,page = CreateDrawIoFile()
     Plotobjects(EntityList,page)
     SaveToFile(file)
-    return 'File Created successfully'
+    print( 'File Created successfully')
+    file_path = os.path.join(GenFile_FolderPath, GenFile_Name_Prefix)
+    return return_fileto_download(file_path)
+
+def return_fileto_download(filename,asattachment=True):
+    try:
+        #filename = secure_filename(filename)  # Sanitize the filename
+        #file_path = os.path.join(GenFile_FolderPath, filename)
+        if os.path.isfile(filename):
+            return send_file(filename, as_attachment=asattachment,
+                mimetype='application/pdf',download_name='GenDesignDoc.drawio')
+        else:
+            return make_response(f"File '{filename}' not found.", 404)
+    except Exception as e:
+        return make_response(f"Error: {str(e)}", 405)
+    
+
 if __name__ == '__main__':
    app.run()
