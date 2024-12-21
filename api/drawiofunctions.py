@@ -10,9 +10,9 @@ GenFile_FolderPath='.\\'
 GenFile_Name_Prefix ='generated_diagram2.drawio'
 
 designer_api = Blueprint('designer_api', __name__)
-@designer_api.route("/designer")
+@designer_api.route("/api/designer")
 def hello():
-    return "list of accounts"   
+    return "list of drawio apis are here"   
 
 def CreateDrawIoFile():
     # Create a new draw.io file
@@ -71,7 +71,7 @@ def SaveToFile(file):
     # Write the file
     file.write()
 
-@designer_api.route('/createdrawio', methods=['GET'])    
+@designer_api.route('/api/createdrawio', methods=['GET'])    
 def ConvertStringsToImage():
     strEntities = request.args.get('name')
     EntityList =[]

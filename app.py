@@ -2,7 +2,7 @@ import os
 
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
-from drawiofunctions import designer_api
+from api.drawiofunctions import designer_api
 
 app = Flask(__name__)
 app.register_blueprint(designer_api)
