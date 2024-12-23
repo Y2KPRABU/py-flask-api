@@ -1,0 +1,28 @@
+<mxfile host="Drawpyo" modified="2024-12-23T23:14:23" agent="Python 3.11, Drawpyo 0.01" version="21.6.5" type="device">
+  <diagram name="Page-1" id="4312898448">
+    <mxGraphModel dx="2037" dy="830" grid="1" gridSize="10" guides="1" toolTips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4312899536" value="" style="swimlane;whiteSpace=wrap;rounded=0;dashed=0;horizontal=0;" vertex="1" parent="1">
+  <mxGeometry x="0" y="0" width="640" height="300" as="geometry" />
+</mxCell>
+        <mxCell id="4311975504" value="Step 1|Step1.1" style="whiteSpace=wrap;rounded=0;dashed=0;" vertex="1" parent="4312899536">
+  <mxGeometry x="100" y="200" width="120" height="80" as="geometry" />
+</mxCell>
+        <mxCell id="4312899344" value="Step 2|Step2.1" style="whiteSpace=wrap;rounded=0;dashed=0;" vertex="1" parent="4312899536">
+  <mxGeometry x="300" y="200" width="120" height="80" as="geometry" />
+</mxCell>
+        <mxCell id="4313852624" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;" edge="1" parent="1" source="4311975504" target="4312899344">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+        <mxCell id="4313924240" value="Step 3|Step3.1" style="whiteSpace=wrap;rounded=0;dashed=0;" vertex="1" parent="4312899536">
+  <mxGeometry x="500" y="200" width="120" height="80" as="geometry" />
+</mxCell>
+        <mxCell id="4313924304" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;" edge="1" parent="1" source="4312899344" target="4313924240">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
