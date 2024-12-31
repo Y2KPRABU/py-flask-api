@@ -2,7 +2,7 @@ import os
 
 from flask import Blueprint
 from flask import (request,make_response, send_file)
-from lib.drawiocreator import CreateDrawIoFile,Plotobjects,SaveToFile
+from corefeatures.drawiocreator import CreateDrawIoFile,Plotobjects,SaveToFile
 
 # Constants for Application
 GenFile_FolderPath='.\\'
