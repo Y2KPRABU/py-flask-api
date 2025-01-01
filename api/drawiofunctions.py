@@ -18,13 +18,10 @@ def hello():
 @designer_api.route('/api/createdrawio', methods=['GET'])    
 def ConvertStringsToImage():
     strEntities = request.args.get('name')
-    EntityList =[]
-    if(strEntities != None):
-        EntityList = strEntities.split(',')
-    else:
-        EntityList = ["Step 1|Step1.1", "Step 2|Step2.1", "Step 3|Step3.1"]
+    if(strEntities == None):
+        strEntities = "Step 1|Step1.1,Step 2|Step2.1, Step 3|Step3.1"
     file,page = CreateDrawIoFile()
-    Plotobjects(EntityList,page)
+    Plotobjects(strEntities,page)
     SaveToFile(file)
     print( 'File Created successfully')
     file_path = os.path.join(GenFile_FolderPath, GenFile_Name_Prefix)
