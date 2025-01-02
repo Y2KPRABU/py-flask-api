@@ -39,9 +39,6 @@ def Plotobjects(InputString_WithSeps,page):
         library="general", obj_name="labeled_horizontal_container", page=page
             )
         parent_container.autosize_to_children = True
-        index = 0
-        Lev1Index=0
-        Lev2Index=0
         Lev1EntitiesList=[]
         HorizDrawObjectsList=[]
         VertDrawObjectsList=[]
@@ -50,6 +47,7 @@ def Plotobjects(InputString_WithSeps,page):
         x=100
         HorizArrayIndex=0
         TwoDimArrayResult,Lev1EntitiesList =  split_string( InputString_WithSeps)
+        #Build the horizontal entities first
         for entity in Lev1EntitiesList:
             y=200
             if(entity != None and entity != ''):
@@ -67,7 +65,7 @@ def Plotobjects(InputString_WithSeps,page):
         vertArrayIndex=0
         x=100
         for sub_array in TwoDimArrayResult:
-            if(sub_array != None and sub_array.count != 0):
+            if(sub_array != None and (len(sub_array) != 0)):
                 vertArrayIndex=0
                 VertDrawObjectsList.clear()
                 y=200
@@ -77,8 +75,8 @@ def Plotobjects(InputString_WithSeps,page):
                             position=(x, y), parent=parent_container, value=entity, page=page)
                         y=y+200
                         VertDrawObjectsList.append(vertblock)
-                    if (vertArrayIndex !=0): #Skip only for the first time
-                        Vertlink = drawpyo.diagram.Edge(
+                        if (vertArrayIndex !=0): #Skip only for the first time
+                            Vertlink = drawpyo.diagram.Edge(
                                 page=page,source=VertDrawObjectsList[vertArrayIndex-1],target=VertDrawObjectsList[vertArrayIndex],)
                     vertArrayIndex+=1
             x=x+200
