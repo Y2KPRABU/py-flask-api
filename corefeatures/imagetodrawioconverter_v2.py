@@ -1,9 +1,23 @@
 import cv2 
 import numpy as np 
 from matplotlib import pyplot as plt 
-from convertimgtodrawio import *
+from drawiocreator import *
+import os
 
-pathtoSrcImg = 'D:\lsegwork\OneDrive - London Stock Exchange Group\wealthnTrade\Proposals Conceptual View.jpg'
+#pathtoSrcImg = 'D:\lsegwork\OneDrive - London Stock Exchange Group\wealthnTrade\Proposals Conceptual View.jpg'
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Define the subfolder name
+samplesrcfile = 'static/images/sample_steps_diagram.jpg'
+print(parent_dir)
+# Construct the full path to the subfolder
+pathtoSrcImg = os.path.join(parent_dir, samplesrcfile)
+print(pathtoSrcImg)
+if(os.path.isfile(pathtoSrcImg)==False):
+    print('File does not exist')
+    exit(0) 
+# Print the subfolder path
+print(pathtoSrcImg)
+
 imgWithSquares = ''
 def plot_all_images(pathtoSrc):  
     # reading image 
@@ -251,7 +265,8 @@ def LoadShapesAndLinesInDiffColours(pathToSrc):
         epsilon = 0.09 * cv2.arcLength(contour, True)
         approx = cv2.approxPolyDP(contour, epsilon, True)
 
-        # If the approximated contour has 4 points, it is a rectangle draw in Green
+        # If the approximated contour has 3 or 4 points, it is a rectangle, 
+        # so  drawing over the shapes in white font color 255,255,255
         if ((len(approx) >= 3) and (cv2.contourArea(approx) >300)):
             shapeContoursList.append(approx)
             cv2.drawContours(image, [approx], -1, (255, 255, 255), 7)
@@ -262,33 +277,45 @@ def LoadShapesAndLinesInDiffColours(pathToSrc):
             # Draw lines for other shapes
             #cv2.drawContours(image, [approx], -1, (255, 0, 0), 2)   
     print('Detected Shape contours count : ', len(shapeContoursList))
-    cv2.imshow('Shapes and Lines', image)
+    cv2.imshow('Initial Shapes and Lines with Shapes blurred in white', image)
     cv2.waitKey(0)    
     
-    # perform edge detection on image with shapes removed above , not the original image
-
-    edges = cv2.Canny(image, 30, 300)
+    # perform edge detection on image with shapes blurred in white
+    # above , not the original image
+    # apertureSize=  range between 3 and 7 are the most common values
+    #increasing the threshold2 parameter reduces the number of edges detected
+    edges = cv2.Canny(image, 20,  threshold2=100, apertureSize=3)
 
     # detect lines in the image using hough lines technique
-    lines = cv2.HoughLinesP(edges, 1, np.pi/180, 70, np.array([]), 30, 30)
-    print('Detected lines : ' + str(len(lines)))
+    #Increasing rho increases the number of lines detected
+    #Increasing threshold decreases the number of lines detected
+    #Increasing the theta , by reducing the pi's denominator, reduces the number of lines detected
+    #Increasing minLineLength increases the number of lines detected
+    #Increasing maxLineGap increases the number of lines
+    lines = cv2.HoughLinesP(image=edges, rho=0.5, theta=  np.pi/50, threshold= 70,lines= np.array([]), 
+                            minLineLength= 30, maxLineGap=30)
+    print('Initial Detected lines : ' + str(len(lines)))
+
+      # iterate over the output lines and draw them
+    for line in lines:
+        for x1, y1, x2, y2 in line:
+            cv2.line(image, (x1, y1), (x2, y2), color=(220, 0, 20), thickness=2)
+    
+    cv2.imshow('Initial  lines blue 1', image)
+    cv2.waitKey(0)
+    
     filteredLines=merge_lines(lines)
     print('Filtered n merged lines : ' + str(len(filteredLines)))
     joined_lines=(filteredLines)
     #print('Filtered n merged lines : ' + str(len(filteredLines)))
     #print('Joined lines : ' + str(len(joined_lines)))
 
-    # iterate over the output lines and draw them
-    for line in lines:
-        for x1, y1, x2, y2 in line:
-            cv2.line(image, (x1, y1), (x2, y2), color=(220, 0, 20), thickness=1)
-    
+  
     for line in joined_lines:
         for x1, y1, x2, y2 in line:
-            cv2.line(image, (x1, y1), (x2, y2), color=(220, 220, 20), thickness=1)
+            cv2.line(image, (x1, y1), (x2, y2), color=(2, 222, 222), thickness=1)
             #cv2.line(image, (line[0], line[1]), (line[2], line[3]), color=(220, 220, 20), thickness=1)
-    cv2.imshow('Shapes  removed 1', image)
-
+   
     
   
     cv2.imshow('Lines redrawn  removed', image)
@@ -300,19 +327,10 @@ def LoadShapesAndLinesInDiffColours(pathToSrc):
 #line = ((2, 3), (2, 7))
 #square = ((1, 4), (5, 4))
 
-#print(is_line_overlapping_square(line, square))  # Output: True
-
-#detect_big_shapes(pathtoSrcImg)
-#plot_Edges(pathtoSrcImg)
-#DetectObjects(pathtoSrcImg)
-diFile, diPage= CreateDrawIoFile()
+#diFile, diPage= CreateDrawIoFile()
 shapeContours, linesList = LoadShapesAndLinesInDiffColours(pathtoSrcImg)
-AddObjects(diPage,shapeContours)
-AddLines(diPage,linesList)
-SaveToFile(diFile)
-#squares, imgWithSquares = detect_squares(pathtoSrcImg)
-#DetectSquaresinGreenAndMaskit()
-#lines=DetectLines(pathtoSrcImg)
-#DetectIntesectingLines(pathtoSrcImg,lines,squares)
-
+#AddObjects(diPage,shapeContours)
+#AddLines(diPage,linesList)
+#SaveToFile(diFile)
+print('File Created successfully')
 

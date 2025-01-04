@@ -4,13 +4,11 @@ import cv2
 # You can set the parameter `lang` as `ch`, `en`, `french`, `german`, `korean`, `japan`
 # to switch the language model in order
 ocr = PaddleOCR(use_angle_cls=False, lang='en') # need to run only once to download and load model into memory
-pathtoSrcImg = '..\\static\\images\\propconceptview.png'
 import os
 # Get the directory of the current file
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Define the subfolder name
-subfolder_name = 'static/images/propconceptview.png'
-font_file_name='static/arial unicode.ttf'
+subfolder_name = 'static/images/sample_steps_diagram.jpg'
 print(parent_dir)
 # Construct the full path to the subfolder
 pathtoSrcImg = os.path.join(parent_dir, subfolder_name)
@@ -35,16 +33,20 @@ from PIL import Image, ImageDraw
 result = result[0]
 image = Image.open(pathtoSrcImg).convert('RGB')
 draw = ImageDraw.Draw(image)
-draw.polygon(((100, 100), (200, 50), (125, 25)), fill="green")
+#draw.polygon(((100, 100), (200, 50), (125, 25)), fill="green")
 
    
 boxes = [line[0] for line in result]
 txts = [line[1][0] for line in result]
 scores = [line[1][1] for line in result]
+
+font_file_name='static/arial unicode.ttf'
 font_path = os.path.join(parent_dir, font_file_name)
 
-#for box in boxes:
-    #draw.polygon((box[0],box[1]), fill="green")
+for box in boxes:
+    #there is an error in below line, needs to be fixed
+    #draw.rectangle([tuple(box[0]), tuple(box[2])], outline="green", width=2)
+    draw.rectangle([tuple(box[0]), tuple(box[2])], outline="green", width=2)
 
 im_show = draw_ocr(image, boxes, txts, scores,font_path=font_path)
 #im_show = Image.fromarray(im_show)
