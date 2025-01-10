@@ -102,8 +102,8 @@ def AddLines(page,lines):
             obj2.width=1
             obj2.height=1
            
-            link = drawpyo.diagram.Edge(page=page,source=obj1,
-    target=obj2)
+            link = drawpyo.diagram.Edge(page=page,source=obj2,
+    target=obj1)
             """ if x1 == x2:  # Vertical line
                 obj.position = (x1, y1)
                 obj.width = 2
