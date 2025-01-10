@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 .dtmp
 .bkp
+generated_diagram2.drawio

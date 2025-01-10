@@ -259,8 +259,8 @@ def LoadShapesAndLinesInDiffColours(pathToSrc):
     intCtr=0
     for contour in cnts:
         intCtr=intCtr+1
-        if(intCtr ==1):# skip the first image which is the outer box
-            continue
+        #if(intCtr ==1):# skip the first image which is the outer box
+            #continue
         # Approximate the contour to a polygon
         epsilon = 0.09 * cv2.arcLength(contour, True)
         approx = cv2.approxPolyDP(contour, epsilon, True)
@@ -313,7 +313,7 @@ def LoadShapesAndLinesInDiffColours(pathToSrc):
   
     for line in joined_lines:
         for x1, y1, x2, y2 in line:
-            cv2.line(image, (x1, y1), (x2, y2), color=(2, 222, 222), thickness=1)
+            cv2.line(image, (x1, y1), (x2, y2), color=(2, 222, 222), thickness=3)
             #cv2.line(image, (line[0], line[1]), (line[2], line[3]), color=(220, 220, 20), thickness=1)
    
     
@@ -327,10 +327,12 @@ def LoadShapesAndLinesInDiffColours(pathToSrc):
 #line = ((2, 3), (2, 7))
 #square = ((1, 4), (5, 4))
 
-#diFile, diPage= CreateDrawIoFile()
+"""
+Draw Io file creation and saving to a file Image to Draw Io converter*"""
+diFile, diPage= CreateDrawIoFile()
 shapeContours, linesList = LoadShapesAndLinesInDiffColours(pathtoSrcImg)
-#AddObjects(diPage,shapeContours)
-#AddLines(diPage,linesList)
-#SaveToFile(diFile)
+AddObjects(diPage,shapeContours)
+AddLines(diPage,linesList)
+SaveToFile(diFile)
 print('File Created successfully')
 
