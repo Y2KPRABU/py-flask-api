@@ -2,6 +2,6 @@ flask
 gunicorn
 Werkzeug
 drawpyo
-cv2
+opencv-python
 numpy
 matplotlib
