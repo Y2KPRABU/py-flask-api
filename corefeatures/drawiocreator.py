@@ -1,6 +1,6 @@
 import drawpyo
 import cv2
-from stringsplitter import split_string 
+from corefeatures.stringsplitter import split_string 
 # Constants for Application
 
 """Generates a draw.io file with the given entities and saves it to the specified folder path with the specified file name prefix."""
